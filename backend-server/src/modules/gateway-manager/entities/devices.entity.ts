@@ -12,7 +12,6 @@ export interface IDevices extends ICoreEntity {
 
 export class Devices {
     @Column({
-        unique: true,
     })
     uid: Number;
 

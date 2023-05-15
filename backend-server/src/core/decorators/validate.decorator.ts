@@ -1,3 +1,4 @@
+import { MiddlewareProperties } from "../../config/core.enum";
 import { getValue } from "../../helpers/util-helpers";
 import { Class, CustomValidationMessage } from "../types/type.interface";
 
@@ -92,8 +93,8 @@ export function ValidateBodyRequest(useClass:Class) {
         if(Reflect.hasMetadata('validate', useClass)){
        
             const validateObject = Reflect.getMetadata('validate', useClass) as Map<string,any>;
-            const existingInjections = Reflect.getMetadata('validate_properties', target.constructor) as Map<string,any>;
-            Reflect.defineMetadata('validate_properties', {
+            const existingInjections = Reflect.getMetadata(MiddlewareProperties.ValidateProperties, target.constructor) as Map<string,any>;
+            Reflect.defineMetadata(MiddlewareProperties.ValidateProperties, {
                 ...existingInjections,
                 [propertyKey]:{
                     ...validateObject,

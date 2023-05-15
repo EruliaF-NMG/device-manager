@@ -46,3 +46,18 @@ export function Put(path: string = "") {
         Reflect.defineMetadata(ModuleProperties.Routes, routes, target.constructor);
     };
 }
+
+export function Delete(path: string = "") {
+    return (target: any, propertyKey: string): void => {
+        if (!Reflect.hasMetadata(ModuleProperties.Routes, target.constructor)) {
+            Reflect.defineMetadata(ModuleProperties.Routes, [], target.constructor);
+        }
+        const routes = Reflect.getMetadata(ModuleProperties.Routes, target.constructor) as Array<RouteDefinitionInterface>;
+        routes.push({
+            method: HTTPMethods.Delete,
+            path,
+            methodName: propertyKey
+        });
+        Reflect.defineMetadata(ModuleProperties.Routes, routes, target.constructor);
+    };
+}

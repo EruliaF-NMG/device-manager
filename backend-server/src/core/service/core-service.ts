@@ -51,5 +51,20 @@ export default class CoreService<T> implements ICoreService<T> {
     async findOne(filterOption:FilterQuery<T> = {}): Promise<HydratedDocument<T>> {
         return await this.model.findOne(filterOption);
     }
+
+        /**
+     * @description soft delete recodes
+     * @param {String} _id
+     */
+        async softDelete(_id:string) : Promise<HydratedDocument<T>> {
+            try{
+                const data:any = await this.findByID(_id);
+                data.deleted_at = new Date();
+                data.deleted_status = true;
+                return await this.update({_id},data);
+            } catch(ex) {
+                throw new Error("Unable to remove recode");
+            }
+        }
   
 }

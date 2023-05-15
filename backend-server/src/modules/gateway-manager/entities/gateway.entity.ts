@@ -7,7 +7,7 @@ export interface IGateway extends ICoreEntity {
     name: String;
     serial_number: String;
     ipv4_address:String;
-    roles: Array<IDevices>
+    devices: Array<IDevices>
 }
 
   
@@ -23,6 +23,12 @@ export class Gateway {
         unique:true,
     })
     serial_number: String;
+
+    @Column({
+        trim:true,
+        unique:true,
+    })
+    ipv4_address: String;
 
     @Column([{
         type: DevicesSchema,
