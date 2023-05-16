@@ -26,11 +26,6 @@ export class Devices {
     status: Boolean;
 
     @Column({
-        default: false,
-    })
-    deleted_status: Boolean;
-
-    @Column({
         default: Date.now,
     })
     created_at: Date;
@@ -39,11 +34,6 @@ export class Devices {
         default: Date.now,
     })
     updated_at: Date;
-
-    @Column({
-        default: null,
-    })
-    deleted_at: Date|null;
 }
 
 export const DevicesSchema = mongooseWrapper.createSchemaByClass<IDevices>(Devices);

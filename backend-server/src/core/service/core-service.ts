@@ -41,7 +41,7 @@ export default class CoreService<T> implements ICoreService<T> {
      * @param {Object} filterOption
      */
     async find(filterOption:FilterQuery<T> = {}): Promise<Array<HydratedDocument<T>>> {
-        return await this.model.find(filterOption);
+        return await this.model.find(filterOption,null,{lean:true});
     }
   
     /**
@@ -49,7 +49,7 @@ export default class CoreService<T> implements ICoreService<T> {
      * @param {Object} filterOption
      */
     async findOne(filterOption:FilterQuery<T> = {}): Promise<HydratedDocument<T>> {
-        return await this.model.findOne(filterOption);
+        return await this.model.findOne(filterOption,null,{lean:true});
     }
 
         /**
