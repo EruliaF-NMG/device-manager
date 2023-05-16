@@ -1,0 +1,26 @@
+
+# dependencies
+/backend-server/dist
+/backend-server/logs
+/backend-server/node_modules
+
+/frontend-client/.pnp
+/frontend-client/.pnp.js
+
+# testing-
+/frontend-client/coverage
+
+# production
+/frontend-client/build
+/frontend-client/dist
+/frontend-client/node_modules
+
+/frontend-client/npm-debug.log*
+/frontend-client/yarn-debug.log*
+/frontend-client/yarn-error.log*
+/frontend-client/.package-lock.json
+
+/backend-server/npm-debug.log*
+/backend-server/yarn-debug.log*
+/backend-server/yarn-error.log*
+/backend-server/.package-lock.json
