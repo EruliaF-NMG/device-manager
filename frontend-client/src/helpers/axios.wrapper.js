@@ -3,15 +3,27 @@ import axios from 'axios';
 /**
  * request data from api
  * @param {String} apiUrl api parth
+ * @param {Object} data request body
+ * @param {String} method HTTP method
  */
-const getData = async (
-    apiUrl,
+const request = async (
+    apiUrl=null,
+    method="GET",
+    data
 ) => {
     try {
-        const response = await axios.get(apiUrl);
+        const response = await axios({
+            headers:{
+                accept: 'application/json',
+                'Content-Type':'application/json'
+            },
+            method: method,
+            url: apiUrl,
+            data: data,
+        });
         return {
             _status: true,
-            data: response.data.drinks
+            data: response.data
         } 
     } catch(ex){
         return {
@@ -22,5 +34,5 @@ const getData = async (
 };
 
 export {
-    getData
+    request
 }

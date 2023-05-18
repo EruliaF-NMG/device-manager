@@ -1,7 +1,7 @@
 
-const apiBaseURL = "https://www.thecocktaildb.com/api/json/v1/1/"
+const apiBaseURL = "http://localhost:5000/api"
 
-export const getAllData = {
-    url: `${apiBaseURL}search.php?s=`,
-    key: 'getAll',
+export const getGatewayData = {
+    apiUrl: `${apiBaseURL}/gateway/`,
+    apiKey: 'getGatewayData',
 };

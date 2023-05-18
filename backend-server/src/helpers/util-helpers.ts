@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { CustomResponse } from "../config/api-response.config";
 import { errorMessageList } from "../config/app.config";
-import { DroneModels, DroneWeightLimits } from "../config/core.enum";
 
 /**
  * Check value is empty
@@ -188,23 +187,4 @@ export const mapInputKey = (realInputKey:string, keyToMap:string) => {
     return value;
   });
   return returnData;
-};
-
-/**
-* @author Nisal Madusanka(EruliaF)
-* @description genarate map key for form validation
-* @param {string} realInputKey known key
-* @param {string} keyToMap key should find
-*/
-export const getDroneWeightLimit = (key:string):Number => {
-  switch(key){
-    case DroneModels.Cruiserweight:
-      return DroneWeightLimits.Cruiserweight
-    case DroneModels.Heavyweight:
-      return DroneWeightLimits.Heavyweight
-    case DroneModels.Lightweight:
-        return DroneWeightLimits.Lightweight
-    case DroneModels.Middleweight:
-        return DroneWeightLimits.Middleweight
-  }
 };

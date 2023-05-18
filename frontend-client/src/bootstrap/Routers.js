@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import cocktailRoutes from '../components/modules/cocktail/cocktail.routes';
+import manageDeviceRoutes from '../components/modules/manage-device/manage-device.routes';
 
 const router = createBrowserRouter([
-    ...cocktailRoutes,
+    ...manageDeviceRoutes,
 ]);
 
 const Routes = () => {

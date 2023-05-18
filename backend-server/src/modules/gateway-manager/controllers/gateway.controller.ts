@@ -20,7 +20,7 @@ export default class GatewayController {
     @Get()
     async getAll(request: Request, response: Response) {
         try{
-            const gateways = await this._gatewayService.find({deleted_status:false});
+            const gateways = await this._gatewayService.pagination(request.query);
             return response.status(successGetResponse.httpStatus)
                 .json(generateResponse(successGetResponse,gateways));
         } catch(ex){

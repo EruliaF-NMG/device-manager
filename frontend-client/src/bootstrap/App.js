@@ -1,6 +1,6 @@
 import { ContextProvider } from './Providers';
 import Routes from './Routers';
-import ErrorBoundary from '../components/ui-components/common/ErrorBoundary';
+import ErrorBoundary from '../components/ui-components/core-components/ErrorBoundary';
 
 const App=()=> {
   return (
