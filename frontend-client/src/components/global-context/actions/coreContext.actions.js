@@ -133,56 +133,69 @@ const resetDataTable = (dispatch, stateKey) => {
   });
 };
 
-const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataTableKey=null, cb = emptyFunction ) => {
-  if (_get(apiRequest, 'setLoader', false) === true) {
-    uiDispatch.setPageLoader(true);
-  }
+const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataTableKey=null,validationObject={}, cb = emptyFunction ) => {
+
+  if (_get(apiRequest, 'setLoader', false) === true)  uiDispatch.setPageLoader(true);
+
   try{
     const result = await request(_get(apiRequest, 'apiUrl', ''),_get(apiRequest, 'method', 'GET'),_get(apiRequest, 'body', null));
-    
-    switch (_get(apiRequest, 'storingType', storingType.DATA_TABLE)) {
-      case storingType.DATA_TABLE:
-        setDataTable(
-          dispatch,
-          dataTableKey,
-          _get(result, 'data.data.data', []),
-          'done',
-          _get(result, 'data.data.current_page', 1),
-          _get(result, 'data.data.total_pages', null),
-          _get(result, 'data.data.data', []).length,
-          _get(result, 'data.data.total_items', null),
-          _get(result, 'data.data.page_size	', 10)
-        );
-        cb(null, result);
-        return;
-      case storingType.CURD_FORM:
-        if (dataTableKey !== null) {
-          resetDataTable(
+
+    if (_get(apiRequest, 'setLoader', false) === true) uiDispatch.setPageLoader(false);
+
+    if(result._status) {
+      console.log(_get(apiRequest, 'apiUrl', ''),result,_get(apiRequest, 'storingType', null));
+      switch (_get(apiRequest, 'storingType', storingType.DATA_TABLE)) {
+        case storingType.DATA_TABLE:
+          setDataTable(
             dispatch,
-            dataTableKey
+            dataTableKey,
+            _get(result, 'data.data.data', []),
+            'done',
+            _get(result, 'data.data.current_page', 1),
+            _get(result, 'data.data.total_pages', null),
+            _get(result, 'data.data.data', []).length,
+            _get(result, 'data.data.total_items', null),
+            _get(result, 'data.data.page_size	', 10)
           );
-        }
-
-        setApiResponse(
-          dispatch,
-          _get(apiRequest, 'apiKey', null),
-          _get(result, 'data.data', null)
-        );
-
-        cb(null, result);
-        return;
-      default:
           cb(null, result);
           return;
+        case storingType.CURD_FORM:
+          if (dataTableKey !== null) {
+            resetDataTable(
+              dispatch,
+              dataTableKey
+            );
+          }
+
+          if (_get(apiRequest, 'apiKey', null) !== null) {
+            setApiResponse(
+              dispatch,
+              _get(apiRequest, 'apiKey', null),
+              _get(result, 'data.data', null)
+            );
+          }
+
+          cb(null, result);
+          return;
+        default:
+            cb(null, result);
+            return;
+      }
+    } else {
+      console.log("--3--");
+      if ( _get(result, 'data.response.data.meta.code', null) === responseCode.VALIDATION_ERROR ) {
+        formContext.setFormError(_get(validationObject, 'formKey', ''), _get(result, 'data.response.data.error', []) );
+      }
     }
     
   } catch(ex) {
+    console.log(ex);
     //if ( _get(error, 'data.meta.code', null) === responseCode.VALIDATION_ERROR )
   }
 }
 
 const validateANDPassData = (dispatch, formContext, uiDispatch,validationObject=null,apiRequest=null,dataTableKey=null, cb = emptyFunction) => {
-  if(validationObject !== null) {
+  if(_get(validationObject,'rules',null) !== null) {
     validate(_get(validationObject,'formData',{}))
       .setFields(_get(validationObject,'fields',{}))
       .setRules(_get(validationObject,'rules',{}))
@@ -194,11 +207,12 @@ const validateANDPassData = (dispatch, formContext, uiDispatch,validationObject=
             cb(error, null);
           } else {
             formContext.setFormError(formKey, []);
-            sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey,cb )
+            sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey,validationObject,cb )
           }
     });
   } else {
-    sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey, cb );
+    console.log("--1--");
+    sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey,validationObject, cb );
   }
 }
 
@@ -213,7 +227,7 @@ const coreAction = (dispatch, uiDispatch,formContext) => {
     setResponseLoadingStatus: (apiKey, result) => setResponseLoadingStatus(dispatch, apiKey, result),
     resetDataTable:(stateKey)=>resetDataTable(dispatch,stateKey),
     validateANDPassData:(validationObject,apiRequest,dataTableKey,cb)=>validateANDPassData(dispatch, formContext, uiDispatch,validationObject,apiRequest,dataTableKey,cb),
-    sendToAPI:(validationObject,apiRequest,dataTableKey,cb)=>sendToAPI(dispatch, formContext, uiDispatch,validationObject,apiRequest,dataTableKey,cb)
+    sendToAPI:(apiRequest,dataTableKey,validationObject,cb)=>sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey,validationObject,cb)
   };
 };
 

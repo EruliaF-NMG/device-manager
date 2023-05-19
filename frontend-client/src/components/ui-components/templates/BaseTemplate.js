@@ -6,8 +6,10 @@ import {
   ApartmentOutlined,
   LaptopOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu } from 'antd';
 import { BreadcrumbElement } from '../core-components/BreadcrumbElement';
+import { ButtonElement } from '../form/ButtonElement';
+import { buttonTypes, buttonSize } from '../../../configs/defaultProps.config';
 
 const { Header, Sider, Content } = Layout
 
@@ -45,11 +47,12 @@ const BaseTemplate = ({
         </Sider>
         <Layout>
             <Header className='p-0 bg-white'>
-                <Button
-                    type="text"
+                <ButtonElement
+                    type={buttonTypes.text}
                     icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                     onClick={() => setCollapsed(!collapsed)}
-                    className='text-base !w-16 !h-16'
+                    styles='text-base !w-16 !h-16'
+                    size={buttonSize.large}
                 />
             </Header>
             <Content

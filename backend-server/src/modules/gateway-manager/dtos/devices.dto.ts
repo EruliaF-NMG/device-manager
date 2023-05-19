@@ -5,7 +5,7 @@ import { InputField } from "../../../core/decorators/validate.decorator";
 export class DevicesDTO {
 
     @DisplayName('UID')
-    @Rules('required')
+    @Rules('required|numeric|min:5|uniqueUID:gateways,uid,devicesID')
     @InputField()
     public uid: string;
 

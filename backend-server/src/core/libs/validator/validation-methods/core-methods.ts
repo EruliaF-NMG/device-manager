@@ -1,3 +1,4 @@
+import { isIPv4 } from 'node:net';
 import { getInputsForValidate, mapInputKey } from '../../../../helpers/util-helpers';
 
 
@@ -228,5 +229,29 @@ const regex = (key:string, values:any, param:any, message:string, filedList:any,
   }
 }
 
+const isIpv4 = (key:string, values:any, param:any, message:string, filedList:any,additionalParam:any, cb:Function) => {
+  try {
+  
+    let formValue = getInputsForValidate(values, key);
+    if(!formValue) {
+      cb(null, true);
+    } else {
+        const status = isIPv4(formValue);
+        if ( status ) {
+          cb(null, true);
+        } else {
+          cb(message);
+        }
+    }
+  } catch (ex) {
+    console.log(
+      `----------------Validation Exception At (regex)-------------------`,
+      `Input Key - ${key}`,
+      `Exception - ${ex}`
+    );
+    cb(true);
+  }
+}
 
-export { required, requiredIf, max, min, numeric, maxAmount, valueIn, regex };
+
+export { required, requiredIf, max, min, numeric, maxAmount, valueIn, regex, isIpv4 };

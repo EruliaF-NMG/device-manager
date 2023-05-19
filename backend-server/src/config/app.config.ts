@@ -16,7 +16,8 @@ const errorMessageList :any = {
     valueIn: 'Please :attribute should in [:in].',
     regex: ':attribute value not in the right format.',
     exists: 'The :attribute value is not available in the database',
-    checkDroneIsReady: 'selected drone should be in IDLE or LOADING status',
+    isIpv4: 'Please provide a valid IPv4 address.',
+    uniqueUID: 'The UID has already been taken.',
 };
 
 export {

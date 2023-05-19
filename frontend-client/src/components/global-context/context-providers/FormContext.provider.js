@@ -4,7 +4,7 @@ import {formAction} from '../actions/formContext.actions';
 import {_set} from '../../../helpers/lodash.wrappers';
 import {
     initFormGroupKey,removeFormGroupKey,setInputValueChangeKey,
-    setComplexInputValueChangeKey,setErrorsKey,mergeFormObjectKey
+    setErrorsKey,mergeFormObjectKey
 } from '../../../configs/actionKeys.config';
 
 
@@ -42,15 +42,6 @@ const uiReducer=(state, action)=>{
                     _updateStatus:!state[action.formGroupKey]["_updateStatus"]
                 }
             };
-        case setComplexInputValueChangeKey:   
-            
-            return {
-                ...state,
-                [action.formGroupKey]:{
-                    ..._set(state,action.inputStatePath,action.value)[action.formGroupKey],
-                    _updateStatus:!state[action.formGroupKey]["_updateStatus"],                    
-                }
-            };   
         case mergeFormObjectKey:   
             return {
                 ...state,

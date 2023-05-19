@@ -28,7 +28,7 @@ const request = async (
     } catch(ex){
         return {
             _status: false,
-            data: null
+            data: ex
         } 
     }
 };

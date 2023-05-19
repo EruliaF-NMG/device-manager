@@ -20,13 +20,11 @@ export class Gateway {
 
     @Column({
         trim:true,
-        unique:true,
     })
     serial_number: String;
 
     @Column({
         trim:true,
-        unique:true,
     })
     ipv4_address: String;
 

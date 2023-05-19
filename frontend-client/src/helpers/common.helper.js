@@ -10,6 +10,7 @@ const isEmpty = (value) => {
     return false;
 }
 
+
 /**
  * remove element form array
  * @param {Array} array 

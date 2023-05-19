@@ -1,6 +1,6 @@
 import {
     initFormGroupKey,removeFormGroupKey,setInputValueChangeKey,
-    setComplexInputValueChangeKey,setErrorsKey,mergeFormObjectKey
+    setErrorsKey,mergeFormObjectKey
  } from "../../../configs/actionKeys.config";
 
 /**
@@ -22,12 +22,13 @@ const initFrom=(dispatch,object)=>{
  * @param {*} dispatch 
  * @param {*} formGroupKey 
  */
-const initFromObject=(dispatch,formGroupKey,isLoad=false,error=[])=>{    
+const initFromObject=(dispatch,formGroupKey,isLoad=false,formObject={},error=[])=>{   
     const attributes = {
         _formGroupKey:formGroupKey,
         _updateStatus:false,
         _onLoad:isLoad,
-        _errors:error
+        _errors:error,
+        ...formObject,
     };
     return initFrom(dispatch,{
         [formGroupKey]:attributes
@@ -71,22 +72,13 @@ const setFormError=(dispatch,formGroupKey,errors)=>{
  * @param {String} inputStatePath 
  * @param {String|Integer|Object|Array} value 
  */
-const changeInput=(dispatch,formGroupKey,inputKey,inputStatePath,value)=>{
-    if(!inputStatePath){       
-        dispatch({
-            type:setInputValueChangeKey,
-            formGroupKey:formGroupKey,
-            inputKey:inputKey,
-            value:value
-        });
-    } else {
-        dispatch({
-            type:setComplexInputValueChangeKey,
-            formGroupKey:formGroupKey,
-            inputStatePath:inputStatePath,
-            value:value
-        }); 
-    }
+const changeInput=(dispatch,formGroupKey,inputKey,value)=>{
+    dispatch({
+        type:setInputValueChangeKey,
+        formGroupKey:formGroupKey,
+        inputKey:inputKey,
+        value:value
+    });
 }
 
 
@@ -108,9 +100,9 @@ const mergeFormObject=(dispatch,formGroupKey,data)=>{
 const formAction=(dispatch)=>{
     return {    
         initFrom:(object)=>initFrom(dispatch,object), 
-        initFromObject:(formGroupKey)=>initFromObject(dispatch,formGroupKey),  
+        initFromObject:(formGroupKey,isLoad,formObject,error)=>initFromObject(dispatch,formGroupKey,isLoad,formObject,error),  
         removeFromGroup:(formGroupKey)=>removeFromGroup(dispatch,formGroupKey),
-        changeInput:(formGroupKey,inputKey,inputStatePath,value)=>changeInput(dispatch,formGroupKey,inputKey,inputStatePath,value),
+        changeInput:(formGroupKey,inputKey,value)=>changeInput(dispatch,formGroupKey,inputKey,value),
         setFormError:(formGroupKey,errors)=>setFormError(dispatch,formGroupKey,errors),
         mergeFormObject:(formGroupKey,data)=>mergeFormObject(dispatch,formGroupKey,data)
     }

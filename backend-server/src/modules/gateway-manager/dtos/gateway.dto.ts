@@ -15,7 +15,7 @@ export class GatewayDTO {
     public serial_number: string;
 
     @DisplayName('IPV4 Address')
-    @Rules('required|unique:gateways,ipv4_address,gatewayID')
+    @Rules('required|isIpv4|unique:gateways,ipv4_address,gatewayID')
     @InputField()
     public ipv4_address: string;
 }

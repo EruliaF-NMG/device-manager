@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { exceptionOccurredResponse, failedPostResponse, successGetResponse, successPostResponse } from "../../../config/api-response.config";
 import { Controller, Get, Inject, Injectable, Post, Put, ValidateBodyRequest } from "../../../core";
-import { generateErrorResponse, generateResponse, getDroneWeightLimit } from "../../../helpers/util-helpers";
+import { generateErrorResponse, generateResponse } from "../../../helpers/util-helpers";
 import { IGateway } from "../entities/gateway.entity";
 import { IGatewayService } from "../interface/gateway-service.interface";
 import mongooseWrapper from "../../../core/wrappers/mongoose.wrapper";
@@ -76,7 +76,8 @@ export default class DevicesController {
     async delete(request: Request, response: Response) {
         try{
             const _id = mongooseWrapper.getObjectID(request.params.devicesID);
-            const gateway = await this._gatewayService.update({},
+            const gatewayID = mongooseWrapper.getObjectID(request.params.gatewayID);
+            const gateway = await this._gatewayService.update({_id:gatewayID},
                 { $pull: { devices: { _id: _id } } });
             if(gateway)  return response.status(successPostResponse.httpStatus)
                             .json(generateResponse(successPostResponse,gateway,'Gateway removed successfully'));

@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 
 import { getInputsForValidate, getValue } from '../../../../helpers/util-helpers';
+import { GatewayEntity } from '../../../../modules/gateway-manager/entities/gateway.entity';
 
 /**
  * @author Nisal Madusanka(EruliaF)
@@ -18,6 +19,7 @@ const unique = (key:string, values:any, param:any, message:string, filedList:any
     const formValue = getInputsForValidate(values, key);
     const filterOption :any = {
       [getValue(param, '1', key)]: formValue,
+      deleted_status:false,
     };
 
     if (mongoose.Types.ObjectId.isValid(getValue(additionalParam, getValue(param, '2', '-'), '-'))) {
@@ -49,7 +51,7 @@ const unique = (key:string, values:any, param:any, message:string, filedList:any
 
 /**
  * @author Nisal Madusanka(EruliaF)
- * @description validate value is exists on DB
+ * @description validate unique with db
  * @param {string} key input value key
  * @param {object} values form values
  * @param {array} param additional validation parameters
@@ -57,36 +59,36 @@ const unique = (key:string, values:any, param:any, message:string, filedList:any
  * @param {object} filedList display name for form elements
  * @param {Function} cb callback function
  */
-const exists = (key:string, values:any, param:any, message:string, filedList:any,additionalParam:any, cb:Function) => {
+const uniqueUID = async (key:string, values:any, param:any, message:string, filedList:any,additionalParam:any, cb:Function) => {
   try {
     const formValue = getInputsForValidate(values, key);
-    let filterOption:any={};
-    if(getValue(param, '1', key) == '_id'){
-      filterOption['_id'] = new mongoose.Types.ObjectId(formValue);
-    } else {
-      filterOption[getValue(param, '1', key)] = formValue;
-    }
 
-    mongoose.connection
-      .collection(getValue(param, '0', key))
-      .findOne(filterOption, (error:any, result:any) => {
-        if (result) {
-          cb(null, true);
-        } else {
-          console.log(1,message);
-          cb(message);
+   GatewayEntity.aggregate([
+        { $match: { "deleted_status" :false } },
+        { $unwind: '$devices'},
+        { $match: { 
+          'devices.uid' : Number(formValue), 
+          'devices._id': {
+              $ne:  new mongoose.Types.ObjectId(additionalParam['devicesID']) ,
+          }
         }
+      }
+      ]).exec().then((result)=>{
+        if(result.length===0) cb(null, true);
+        else cb(message, null);
+      }).catch((error)=>{
+        cb(true);
       });
   } catch (ex) {
     console.log(
-      `----------------Validation Exception At (exists)-------------------`,
+      `----------------Validation Exception At (unique)-------------------`,
       `Input Key - ${key}`,
       `Exception - ${ex}`
     );
 
-    cb(message);
+    cb(true);
   }
 };
 
 
-export { unique, exists };
+export { unique, uniqueUID };
