@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "d4d65127-c4f4-45b6-a1a4-d4ff42f5bfc8",
+		"name": "Device Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Gateway",
+			"item": [
+				{
+					"name": "Get Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/gateway",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Gateway",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/6466f93383540cf2fb1b714b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"6466f93383540cf2fb1b714b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gateway",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" :\"gateways88\",\n    \"serial_number\" :\"TT78\",\n    \"ipv4_address\" :\"192.19.12.126\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/gateway",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Gateway",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" :\"gatewaysTT\",\n    \"serial_number\" :\"TT78G\",\n    \"ipv4_address\" :\"192.19.1.126\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/6467721c550dd22fc323ce81",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"6467721c550dd22fc323ce81"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "Get Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/646728af35228ecfc88c6367/devices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"646728af35228ecfc88c6367",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Gateway",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/646728af35228ecfc88c6367/devices/64677287550dd22fc323ce9b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"646728af35228ecfc88c6367",
+								"devices",
+								"64677287550dd22fc323ce9b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gateway",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\" :\"12354545\",\n    \"vendor\" :\"Test Ven5\",\n    \"status\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/646728af35228ecfc88c6367/devices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"646728af35228ecfc88c6367",
+								"devices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Gateway",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\" :\"12354545\",\n    \"vendor\" :\"Test Ven9\",\n    \"status\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/gateway/646728af35228ecfc88c6367/devices/64677287550dd22fc323ce9b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"gateway",
+								"646728af35228ecfc88c6367",
+								"devices",
+								"64677287550dd22fc323ce9b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
