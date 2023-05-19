@@ -6,6 +6,7 @@ import { emptyFunction } from '../../../../../configs/defaultProps.config';
 import { Fragment } from 'react';
 
 const DataTable=({
+    title="",
     headerList=[],
     resultBody=[],
     isSetAction=true,
@@ -16,7 +17,7 @@ const DataTable=({
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div className='flex flex-row p-2'>
-                <h1 className='m-0 w-2/4 text-base'>Table name</h1>
+                <h1 className='m-0 w-2/4 text-base'>{title}</h1>
                 <div className='flex w-2/4 justify-end'>
                     {renderAddBtn()}
                 </div>

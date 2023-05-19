@@ -143,7 +143,6 @@ const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataT
     if (_get(apiRequest, 'setLoader', false) === true) uiDispatch.setPageLoader(false);
 
     if(result._status) {
-      console.log(_get(apiRequest, 'apiUrl', ''),result,_get(apiRequest, 'storingType', null));
       switch (_get(apiRequest, 'storingType', storingType.DATA_TABLE)) {
         case storingType.DATA_TABLE:
           setDataTable(
@@ -182,7 +181,6 @@ const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataT
             return;
       }
     } else {
-      console.log("--3--");
       if ( _get(result, 'data.response.data.meta.code', null) === responseCode.VALIDATION_ERROR ) {
         formContext.setFormError(_get(validationObject, 'formKey', ''), _get(result, 'data.response.data.error', []) );
       }
@@ -211,7 +209,6 @@ const validateANDPassData = (dispatch, formContext, uiDispatch,validationObject=
           }
     });
   } else {
-    console.log("--1--");
     sendToAPI(dispatch, formContext, uiDispatch,apiRequest,dataTableKey,validationObject, cb );
   }
 }

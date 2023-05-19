@@ -26,7 +26,6 @@ const FormElement=({
     setGroupName="",
     setFormObject={},
     layout=formLayoutTypes.vertical,
-    onDestroyUnsetFormObject=true,
     children=null
 })=>{
 
@@ -37,9 +36,7 @@ const FormElement=({
         formAction.initFromObject(setGroupName,false,setFormObject);
 
         return () => {
-            if( onDestroyUnsetFormObject ) {
-                formAction.removeFromGroup(setGroupName);
-            }
+            formAction.removeFromGroup(setGroupName);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);

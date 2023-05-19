@@ -90,5 +90,38 @@ const uniqueUID = async (key:string, values:any, param:any, message:string, file
   }
 };
 
+/**
+ * @author Nisal Madusanka(EruliaF)
+ * @description validate unique with db
+ * @param {string} key input value key
+ * @param {object} values form values
+ * @param {array} param additional validation parameters
+ * @param {string} message Error message
+ * @param {object} filedList display name for form elements
+ * @param {Function} cb callback function
+ */
+const checkDeviceCount = async (key:string, values:any, param:any, message:string, filedList:any,additionalParam:any, cb:Function) => {
+  try {
+    mongoose.connection
+      .collection('gateways')
+      .findOne({'_id':new mongoose.Types.ObjectId(additionalParam['gatewayID'])}, (error:any, result:any) => {
+        if (result) {
+          if(result.devices.length >= 10) cb(message, null);
+          else cb(null, true);
+        } else {
+          cb(null, true);
+        }
+      });
+  } catch (ex) {
+    console.log(
+      `----------------Validation Exception At (unique)-------------------`,
+      `Input Key - ${key}`,
+      `Exception - ${ex}`
+    );
 
-export { unique, uniqueUID };
+    cb(true);
+  }
+}
+
+
+export { unique, uniqueUID,checkDeviceCount };

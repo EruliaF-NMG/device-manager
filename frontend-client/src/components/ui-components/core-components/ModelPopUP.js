@@ -21,6 +21,7 @@ const ModelPopUP = ({
             onCancel={handleCancel}
             footer={footerElements}
             maskClosable={maskClosable}
+            destroyOnClose={true}
         >
             {modelContent}
         </Modal>

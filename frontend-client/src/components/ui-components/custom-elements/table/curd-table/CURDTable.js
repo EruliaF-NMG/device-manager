@@ -9,6 +9,7 @@ import { emptyFunction } from '../../../../../configs/defaultProps.config';
 const CURDTable = ({
     dataTableKey="",
     apiUrl="",
+    title="",
     headerList=[],
     renderActionBtn=emptyFunction,
     renderAddBtn=emptyFunction
@@ -36,6 +37,7 @@ const CURDTable = ({
 
     return (
         <DataTable
+            title={title}
             isSetAction={true}
             headerList={headerList}
             resultBody={_get(coreState,`dataTableResponses.${dataTableKey}.results`,[])}

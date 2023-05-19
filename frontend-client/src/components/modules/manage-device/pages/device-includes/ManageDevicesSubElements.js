@@ -2,6 +2,14 @@ import { FormElement } from '../../../../ui-components/form/FormElement';
 import { InputElementWithState } from '../../../../ui-components/form/InputElement';
 import { updateDeviceData, addDeviceData } from '../../../../../configs/apiEndPoints.config';
 import { DescriptionsElement,DescriptionsElementItem } from '../../../../ui-components/core-components/DescriptionsElement';
+import { SwitchElementWithState } from '../../../../ui-components/form/SwitchElement';
+import { dateToString } from '../../../../../helpers/common.helper';
+
+const ShowStatus=({
+    rowData
+})=>{
+    return (<span>{rowData.status?"Online":"Offline"}</span>)
+}
 
 const EditDevice = ({
     rowData={},
@@ -32,7 +40,13 @@ const EditDevice = ({
                 formGroupKey={updateDeviceData.apiKey}
             />
 
-            <InputElementWithState
+            {/* <InputElementWithState
+                label="Device status"
+                name="status"
+                formGroupKey={updateDeviceData.apiKey}
+            /> */}
+
+            <SwitchElementWithState
                 label="Device status"
                 name="status"
                 formGroupKey={updateDeviceData.apiKey}
@@ -67,7 +81,7 @@ const CreateDevice = () => {
                 formGroupKey={addDeviceData.apiKey}
             />
 
-            <InputElementWithState
+            <SwitchElementWithState
                 label="Device status"
                 name="status"
                 formGroupKey={addDeviceData.apiKey}
@@ -85,7 +99,10 @@ const ViewDevice = ({
             <DescriptionsElement >
                 <DescriptionsElementItem label='Device uid'>{rowData.uid}</DescriptionsElementItem>
                 <DescriptionsElementItem label='Vendor Name'>{rowData.vendor}</DescriptionsElementItem>
-                <DescriptionsElementItem label='Device status'>{rowData.status}</DescriptionsElementItem>
+                <DescriptionsElementItem label='Device status'><ShowStatus rowData={rowData} /></DescriptionsElementItem>
+            </DescriptionsElement>
+            <DescriptionsElement>
+                <DescriptionsElementItem label='Created At'>{dateToString(rowData.created_at)}</DescriptionsElementItem>
             </DescriptionsElement>
         </div>
     )
@@ -94,5 +111,6 @@ const ViewDevice = ({
 export {
     EditDevice,
     CreateDevice,
-    ViewDevice
+    ViewDevice,
+    ShowStatus
 }

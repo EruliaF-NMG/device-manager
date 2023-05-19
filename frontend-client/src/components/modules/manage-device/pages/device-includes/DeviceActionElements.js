@@ -1,6 +1,5 @@
 import { Fragment,useRef } from 'react';
-import { DescriptionsElement,DescriptionsElementItem } from '../../../../ui-components/core-components/DescriptionsElement';
-import { DataTable,ActionButton } from '../../../../ui-components/custom-elements/table';
+import { ActionButton } from '../../../../ui-components/custom-elements/table';
 import { ButtonElement,ButtonElementWithState } from '../../../../ui-components/form/ButtonElement';
 import { CreateDevice,EditDevice,ViewDevice } from './ManageDevicesSubElements';
 import { updateDeviceData, addDeviceData,getGatewayData, removeDeviceData } from '../../../../../configs/apiEndPoints.config';
@@ -122,45 +121,7 @@ const RenderAction=({rowData,index,gatewayData})=>{
     )
 }
 
-const ViewGateway = ({
-    rowData={},
-    index=null,
-}) => {
-
-    return (
-        <div>
-            <DescriptionsElement >
-                <DescriptionsElementItem label='Gateway Name'>{rowData.name}</DescriptionsElementItem>
-                <DescriptionsElementItem label='Serial Number'>{rowData.serial_number}</DescriptionsElementItem>
-                <DescriptionsElementItem label='IPV$ Address'>{rowData.ipv4_address}</DescriptionsElementItem>
-            </DescriptionsElement>
-            
-                <DataTable
-                    headerList={[
-                        {
-                            heading:"Vendor Name",
-                            dataIndex:"vendor",
-                            defaultValue:""
-                        },{
-                            heading:"Status",
-                            dataIndex:"status",
-                            defaultValue:""
-                        },{
-                            heading:"UID",
-                            dataIndex:"uid",
-                            defaultValue:""
-                        }
-                    ]}
-                    resultBody={rowData.devices}
-                    isSetAction={true}
-                    isSetPagination={false}
-                    renderActionBtn={(deviceData,index)=>(<RenderAction index={index} rowData={deviceData} gatewayData={rowData} />)}
-                    renderAddBtn={()=><AddAction gatewayData={rowData}/>}
-                />
-        </div>
-    );
-}
-
 export {
-    ViewGateway
+    AddAction,
+    RenderAction
 }

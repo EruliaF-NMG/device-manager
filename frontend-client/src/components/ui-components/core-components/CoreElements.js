@@ -6,7 +6,6 @@ const ISEmpty = ({
     message="",
     children=(null),
 }) => {
-    console.log(data);
     return (
         <Fragment>
             {

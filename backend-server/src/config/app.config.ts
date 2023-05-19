@@ -18,6 +18,7 @@ const errorMessageList :any = {
     exists: 'The :attribute value is not available in the database',
     isIpv4: 'Please provide a valid IPv4 address.',
     uniqueUID: 'The UID has already been taken.',
+    checkDeviceCount:'One gateway can only have 10 devices'
 };
 
 export {
