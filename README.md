@@ -1,4 +1,4 @@
-# Device Manager (Backend & FrontEnd)
+# Device Manager (Backend & Frontend)
 
 Backend :- Node js,Express,Typescript,MongoDB,Docker
 
@@ -19,6 +19,8 @@ Run Backend Server
 6). Application run on http://localhost:5000/
 
 7). import Postmen API Document 
+
+
 
 
 Run Frontend Client
