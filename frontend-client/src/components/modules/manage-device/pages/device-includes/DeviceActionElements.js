@@ -30,8 +30,8 @@ const AddAction = ({ gatewayData }) => {
                             'status':'Device status'
                         },
                         rules:{
-                            'uid':'required',
-                            'vendor':'required'
+                            'uid':'required|numeric|min:5',
+                            'vendor':'required|max:100'
                         }
                     }}
                     onClick={(error)=>{

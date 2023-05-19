@@ -1,7 +1,13 @@
 import { HomeOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import { NavLink } from 'react-router-dom';
+import PropTypes from "prop-types";
 
+/**
+ * Breadcrumb UI element
+ * @param {Array} breadcrumbList 
+ * @returns 
+ */
 const BreadcrumbElement = ({
     breadcrumbList=[]
 }) =>{
@@ -25,6 +31,10 @@ const BreadcrumbElement = ({
             className='!mb-6'
         />
     )
+}
+
+BreadcrumbElement.propTypes = {    
+    breadcrumbList: PropTypes.array,
 }
 
 export {

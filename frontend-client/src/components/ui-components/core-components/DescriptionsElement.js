@@ -1,4 +1,5 @@
 import { Descriptions } from 'antd';
+import PropTypes from "prop-types";
 
 const DescriptionsElement = ({
     title="",
@@ -9,6 +10,11 @@ const DescriptionsElement = ({
     );
 }
 
+DescriptionsElement.propTypes = {    
+    title: PropTypes.string,
+    children: PropTypes.node,
+}
+
 const DescriptionsElementItem = ({
     label="",
     children=null,
@@ -16,6 +22,11 @@ const DescriptionsElementItem = ({
     return(
         <Descriptions.Item label={label}>{children}</Descriptions.Item>
     );
+}
+
+DescriptionsElementItem.propTypes = {    
+    label: PropTypes.string,
+    children: PropTypes.node,
 }
 
 export {

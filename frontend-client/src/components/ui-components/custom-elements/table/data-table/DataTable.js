@@ -11,8 +11,13 @@ const DataTable=({
     resultBody=[],
     isSetAction=true,
     isSetPagination=true,
+    currentPage=1,
+    perPage=1,
+    totalPageCount=1,
+    totalRecodes=1,
     renderActionBtn=emptyFunction,
     renderAddBtn=emptyFunction,
+    onNext=emptyFunction,
 }) => {
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -37,7 +42,13 @@ const DataTable=({
                         />
                     </table>
                     <ISEmpty message='' data={isSetPagination} >
-                        <Pagination/>
+                        <Pagination
+                            currentPage={currentPage}
+                            perPage={perPage}
+                            totalPageCount={totalPageCount}
+                            totalRecodes={totalRecodes}
+                            onNext={onNext}
+                        />
                     </ISEmpty>
                 </Fragment>
             </ISEmpty>

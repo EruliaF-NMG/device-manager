@@ -95,6 +95,11 @@ const sendAPIRequest = async (dispatch, apiUrl = null,apiKey=null) => {
   }
 };
 
+/**
+ * initialize data table object 
+ * @param {Function} dispatch 
+ * @param {String} stateKey 
+ */
 const initDataTable = (dispatch, stateKey) => {
   dispatch({
     type: initDataTableKey,
@@ -102,6 +107,18 @@ const initDataTable = (dispatch, stateKey) => {
   });
 };
 
+/**
+ * set data to data table object 
+ * @param {Function} dispatch 
+ * @param {String} stateKey 
+ * @param {Array} results 
+ * @param {string} fetching 
+ * @param {Number} current_page 
+ * @param {Number} page_count 
+ * @param {Number} per_page 
+ * @param {Number} total 
+ * @param {Number} page_size 
+ */
 const setDataTable = (
   dispatch,
   stateKey,
@@ -126,6 +143,11 @@ const setDataTable = (
   });
 };
 
+/**
+ * Change reset flag status
+ * @param {Function} dispatch 
+ * @param {String} stateKey 
+ */
 const resetDataTable = (dispatch, stateKey) => {
   dispatch({
     type: reLoadDataTableDataKey,
@@ -133,15 +155,29 @@ const resetDataTable = (dispatch, stateKey) => {
   });
 };
 
+/**
+ * Send data to api and update global state with api result
+ * @param {Function} dispatch 
+ * @param {Function} formContext 
+ * @param {Function} uiDispatch 
+ * @param {Object} apiRequest api request data
+ * @param {string} dataTableKey 
+ * @param {Object} validationObject form validation related data
+ * @param {Function} cb 
+ */
 const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataTableKey=null,validationObject={}, cb = emptyFunction ) => {
 
+  //set page loader
   if (_get(apiRequest, 'setLoader', false) === true)  uiDispatch.setPageLoader(true);
 
   try{
+    // call api
     const result = await request(_get(apiRequest, 'apiUrl', ''),_get(apiRequest, 'method', 'GET'),_get(apiRequest, 'body', null));
 
+     //remove page loader
     if (_get(apiRequest, 'setLoader', false) === true) uiDispatch.setPageLoader(false);
 
+    //pass data to global state
     if(result._status) {
       switch (_get(apiRequest, 'storingType', storingType.DATA_TABLE)) {
         case storingType.DATA_TABLE:
@@ -188,10 +224,19 @@ const sendToAPI = async ( dispatch, formContext, uiDispatch, apiRequest={},dataT
     
   } catch(ex) {
     console.log(ex);
-    //if ( _get(error, 'data.meta.code', null) === responseCode.VALIDATION_ERROR )
   }
 }
 
+/**
+ * Validate request before to sending  data to api
+ * @param {Function} dispatch 
+ * @param {Function} formContext 
+ * @param {Function} uiDispatch 
+ * @param {Object} apiRequest api request data
+ * @param {string} dataTableKey 
+ * @param {Object} validationObject form validation related data
+ * @param {Function} cb 
+ */
 const validateANDPassData = (dispatch, formContext, uiDispatch,validationObject=null,apiRequest=null,dataTableKey=null, cb = emptyFunction) => {
   if(_get(validationObject,'rules',null) !== null) {
     validate(_get(validationObject,'formData',{}))

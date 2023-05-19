@@ -1,4 +1,4 @@
-import { required, numeric, regex  } from './core-methods';
+import { required, numeric, regex, min, max  } from './core-methods';
 
 
-export { required, numeric ,regex };
+export { required, numeric ,regex, min, max };

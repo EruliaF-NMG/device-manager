@@ -62,11 +62,9 @@ const FormElement=({
 
 FormElement.propTypes = {    
     className: PropTypes.string,
-    isBackProsess: PropTypes.bool,
     setGroupName: PropTypes.string,
     setFormObject: PropTypes.object,
     children: PropTypes.node,
-    onDestroyUnsetFormObject:PropTypes.bool
 }
 
 export {

@@ -1,5 +1,7 @@
 import { useContext } from 'react';
-import { Button } from 'antd';
+import { Button,notification } from 'antd';
+import PropTypes from "prop-types";
+
 import { buttonTypes,emptyFunction,buttonShape,buttonSize } from '../../../configs/defaultProps.config';
 import { FormContext } from '../../global-context/context-providers/FormContext.provider';
 import { CoreContext } from '../../global-context/context-providers/CoreContext.provider';
@@ -32,6 +34,19 @@ const ButtonElement = ({
         </Button>
     );
 }
+
+ButtonElement.propTypes = {    
+    type: PropTypes.string,
+    icon: PropTypes.node,
+    disabled: PropTypes.bool,
+    danger: PropTypes.bool,
+    styles: PropTypes.string,
+    shape: PropTypes.string,
+    size: PropTypes.string,
+    onClick: PropTypes.func,
+    children: PropTypes.node,
+}
+
 
 const ButtonElementWithState = ({
     type=buttonTypes.primary,
@@ -69,9 +84,20 @@ const ButtonElementWithState = ({
         },
         dataTableKey,
         (error,result)=>{
+            openNotification(error,result);
             onClick(error,result);
         });
     }
+
+    const openNotification = (error,result) => {
+        if(_get(result,'data.meta.message',null)===null) return;
+        notification.open({
+          className: error===null ?"!bg-green-100":"!bg-red-100",            
+          message: error===null ?"Success":"Failed",
+          duration:2,
+          description:_get(result,'data.meta.message',"")
+        });
+    };
 
     return(
         <ButtonElement
@@ -89,6 +115,22 @@ const ButtonElementWithState = ({
     );
 }
 
+ButtonElementWithState.propTypes = {    
+    type: PropTypes.string,
+    icon: PropTypes.node,
+    disabled: PropTypes.bool,
+    danger: PropTypes.bool,
+    styles: PropTypes.string,
+    shape: PropTypes.string,
+    size: PropTypes.string,
+    apiUrl: PropTypes.string,
+    apiMethod: PropTypes.string,
+    dataTableKey: PropTypes.string,
+    formGroupKey: PropTypes.string,
+    formValidateObject: PropTypes.object,
+    onClick: PropTypes.func,
+    children: PropTypes.node,
+}
 
 export {
     ButtonElement,

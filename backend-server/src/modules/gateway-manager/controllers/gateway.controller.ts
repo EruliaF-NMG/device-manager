@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
-import { exceptionOccurredResponse, failedPostResponse, successGetResponse, successPostResponse } from "../../../config/api-response.config";
 import { Controller, Get, Inject, Injectable, Post, Put, ValidateBodyRequest } from "../../../core";
-import { generateErrorResponse, generateResponse, getDroneWeightLimit } from "../../../helpers/util-helpers";
+import { generateErrorResponse, generateResponse } from "../../../helpers/util-helpers";
 import { IGateway } from "../entities/gateway.entity";
 import { IGatewayService } from "../interface/gateway-service.interface";
 import { GatewayDTO } from "../dtos/gateway.dto";
 import mongooseWrapper from "../../../core/wrappers/mongoose.wrapper";
 import { Delete } from "../../../core/decorators/router.decorator";
-
+import { exceptionOccurredResponse, failedPostResponse, 
+    successGetResponse, successPostResponse,successPutResponse,failedPutResponse,
+    failedDeleteResponse, successDeleteResponse
+} from "../../../config/api-response.config";
 
 @Injectable()
 @Controller('/api/gateway')
@@ -25,7 +27,7 @@ export default class GatewayController {
                 .json(generateResponse(successGetResponse,gateways));
         } catch(ex){
             return response.status(exceptionOccurredResponse.httpStatus)
-                .json(generateErrorResponse(exceptionOccurredResponse,ex,'Failed get dispatch data'));
+                .json(generateErrorResponse(exceptionOccurredResponse,ex,'Failed get gateway data'));
         }
     }
 
@@ -51,13 +53,13 @@ export default class GatewayController {
             const _id = mongooseWrapper.getObjectID(request.params.gatewayID);
             const data = request.body as GatewayDTO;
             const gateway = await this._gatewayService.update({_id},data);
-            if(gateway)  return response.status(successPostResponse.httpStatus)
-                            .json(generateResponse(successPostResponse,gateway,'Gateway update successfully'));
-            else    return response.status(failedPostResponse.httpStatus)
-                            .json(generateErrorResponse(failedPostResponse,{},'Failed to update gateway'));                   
+            if(gateway)  return response.status(successPutResponse.httpStatus)
+                            .json(generateResponse(successPutResponse,gateway,'Gateway update successfully'));
+            else    return response.status(failedPutResponse.httpStatus)
+                            .json(generateErrorResponse(failedPutResponse,{},'Failed to update gateway'));                   
         } catch(ex){ 
-            return response.status(failedPostResponse.httpStatus)
-                .json(generateErrorResponse(failedPostResponse,ex,'Failed to update gateway'));
+            return response.status(failedPutResponse.httpStatus)
+                .json(generateErrorResponse(failedPutResponse,ex,'Failed to update gateway'));
         }
     }
 
@@ -65,13 +67,13 @@ export default class GatewayController {
     async delete(request: Request, response: Response) {
         try{
             const gateway = await this._gatewayService.softDelete(request.params.gatewayID);
-            if(gateway)  return response.status(successPostResponse.httpStatus)
-                            .json(generateResponse(successPostResponse,gateway,'Gateway removed successfully'));
-            else    return response.status(failedPostResponse.httpStatus)
-                            .json(generateErrorResponse(failedPostResponse,{},'Failed to removed gateway'));                   
+            if(gateway)  return response.status(successDeleteResponse.httpStatus)
+                            .json(generateResponse(successDeleteResponse,gateway,'Gateway removed successfully'));
+            else    return response.status(failedDeleteResponse.httpStatus)
+                            .json(generateErrorResponse(failedDeleteResponse,{},'Failed to removed gateway'));                   
         } catch(ex){ 
-            return response.status(failedPostResponse.httpStatus)
-                .json(generateErrorResponse(failedPostResponse,ex,'Failed to removed gateway'));
+            return response.status(failedDeleteResponse.httpStatus)
+                .json(generateErrorResponse(failedDeleteResponse,ex,'Failed to removed gateway'));
         }
     }
 

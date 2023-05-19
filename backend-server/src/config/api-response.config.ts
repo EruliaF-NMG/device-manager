@@ -28,6 +28,12 @@ export const successPostResponse : CustomResponse =  {
     httpStatus: 200,
   };
   
+  export const failedPutResponse : CustomResponse =  {
+    code:       'FAILED_UPDATED',
+    message:    'Failed to update resource',
+    httpStatus: 200,
+  };
+
   export const successDeleteResponse : CustomResponse =  {
     code:       'SUCCESSFULLY_DELETED',
     message:    'resource deleted successfully',

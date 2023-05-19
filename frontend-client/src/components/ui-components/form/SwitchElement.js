@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Switch,Form } from 'antd';
+import PropTypes from "prop-types";
 
 import { emptyFunction, inputValidateStatus } from '../../../configs/defaultProps.config';
 import { FormContext } from '../../global-context/context-providers/FormContext.provider';
@@ -34,13 +35,22 @@ const SwitchElement = ({
     );
 }
 
+SwitchElement.propTypes = {    
+    label: PropTypes.string,
+    name: PropTypes.string,
+    helpTest: PropTypes.string,
+    disabled: PropTypes.bool,
+    isError: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
+    onChange:PropTypes.func
+}
+
 const SwitchElementWithState = ({
     label="",
     name="",
     helpTest="",
     formGroupKey="",
     disabled=false,
-    onChange=emptyFunction,
 }) => {
 
     const [ formState, formAction ]= useContext( FormContext );
@@ -61,6 +71,14 @@ const SwitchElementWithState = ({
             onChange={(value)=> formAction.changeInput(formGroupKey,name,value)}
         />
     )
+}
+
+SwitchElementWithState.propTypes = {    
+    label: PropTypes.string,
+    name: PropTypes.string,
+    helpTest: PropTypes.string,
+    formGroupKey: PropTypes.string,
+    disabled: PropTypes.bool,
 }
 
 export {

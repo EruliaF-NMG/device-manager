@@ -88,8 +88,8 @@ const RenderAction=({rowData,index})=>{
                                 'ipv4_address':'IPV4 Address'
                             },
                             rules:{
-                                'name':'required',
-                                'serial_number':'required',
+                                'name':'required|max:100',
+                                'serial_number':'required|max:100',
                                 'ipv4_address':'required'
                             }
                         }}

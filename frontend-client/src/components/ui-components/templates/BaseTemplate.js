@@ -37,11 +37,6 @@ const BaseTemplate = ({
                         icon: <ApartmentOutlined />,
                         label: 'Gateway',
                     },
-                    {
-                        key: '2',
-                        icon: <LaptopOutlined />,
-                        label: 'Device',
-                    },
                 ]}
             />
         </Sider>

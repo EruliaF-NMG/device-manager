@@ -1,6 +1,8 @@
 
 const emptyFunction = (...para) => undefined;
 
+const pageLimit = 10;
+
 const buttonTypes = {
     primary:'primary',
     ghost:"ghost",
@@ -41,5 +43,6 @@ export {
     buttonShape,
     buttonSize,
     inputValidateStatus,
-    formLayoutTypes
+    formLayoutTypes,
+    pageLimit
 }

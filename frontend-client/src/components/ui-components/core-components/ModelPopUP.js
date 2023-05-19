@@ -1,5 +1,6 @@
 
 import { Modal } from 'antd';
+import PropTypes from "prop-types";
 import { emptyFunction } from '../../../configs/defaultProps.config';
 
 const ModelPopUP = ({
@@ -26,6 +27,17 @@ const ModelPopUP = ({
             {modelContent}
         </Modal>
     )
+}
+
+PropTypes.propTypes = {    
+    title: PropTypes.string,
+    modelClassName: PropTypes.string,
+    isModalOpen: PropTypes.bool,
+    maskClosable: PropTypes.bool,
+    onOk: PropTypes.func,
+    handleCancel: PropTypes.func,
+    modelContent: PropTypes.node,
+    footerElements: PropTypes.arrayOf(NodeList),
 }
 
 export {

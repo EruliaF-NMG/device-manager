@@ -83,5 +83,69 @@ const regex = (key, values, param, message, filedList,additionalParam, cb) => {
   }
 }
 
+/**
+ * @description validate min
+ * @param {string} key input value key
+ * @param {object} values form values
+ * @param {array} param additional validation parameters
+ * @param {string} message Error message
+ * @param {object} filedList display name for form elements
+ * @param {Function} cb callback function
+ */
+const min = (key, values, param, message, filedList,additionalParam, cb) => {
+  try {
+      const formValue = getInputsForValidate(values, key);
+      if (formValue && formValue.length < param) {
+          let newMessage = message;
+          newMessage = newMessage.replace(':min', param);
+          cb(newMessage);
+      } else {
+          cb(null, true)
+      }
 
-export { required,numeric,regex };
+  } catch (ex) {
+      console.log(
+          `----------------Validation Exception At (min)-------------------`,
+          `Input Key - ${key}`,
+          `Exception - ${ex}`
+      );
+
+      cb(true);
+  }
+}
+
+
+/**
+ * @description validate max
+ * @param {string} key input value key
+ * @param {object} values form values
+ * @param {array} param additional validation parameters
+ * @param {string} message Error message
+ * @param {object} filedList display name for form elements
+ * @param {Function} cb callback function
+ */
+const max = (key, values, param, message, filedList,additionalParam, cb) => {
+  try {
+      const formValue = getInputsForValidate(values, key);
+      if (formValue && formValue.length > param) {
+          let newMessage = message;
+          newMessage = newMessage.replace(':max', param);
+          cb(newMessage);
+      } else {
+          cb(null, true)
+      }
+
+  } catch (ex) {
+      console.log(
+          `----------------Validation Exception At (max)-------------------`,
+          `Input Key - ${key}`,
+          `Exception - ${ex}`
+      );
+
+      cb(true);
+  }
+}
+
+
+
+export { required,numeric,regex,min,max };

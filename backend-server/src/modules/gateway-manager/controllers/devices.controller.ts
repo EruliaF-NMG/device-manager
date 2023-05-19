@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { exceptionOccurredResponse, failedPostResponse, successGetResponse, successPostResponse } from "../../../config/api-response.config";
 import { Controller, Get, Inject, Injectable, Post, Put, ValidateBodyRequest } from "../../../core";
 import { generateErrorResponse, generateResponse } from "../../../helpers/util-helpers";
 import { IGateway } from "../entities/gateway.entity";
@@ -8,6 +7,11 @@ import mongooseWrapper from "../../../core/wrappers/mongoose.wrapper";
 import { Delete } from "../../../core/decorators/router.decorator";
 import { DevicesDTO } from "../dtos/devices.dto";
 import { IDevices } from "../entities/devices.entity";
+import { exceptionOccurredResponse, failedPostResponse, 
+    successGetResponse, successPostResponse,successPutResponse,failedPutResponse,
+    failedDeleteResponse, successDeleteResponse
+} from "../../../config/api-response.config";
+
 
 
 @Injectable()
@@ -27,7 +31,7 @@ export default class DevicesController {
                 .json(generateResponse(successGetResponse,gateways.devices));
         } catch(ex){
             return response.status(exceptionOccurredResponse.httpStatus)
-                .json(generateErrorResponse(exceptionOccurredResponse,ex,'Failed get dispatch data'));
+                .json(generateErrorResponse(exceptionOccurredResponse,ex,'Failed get device data'));
         }
     }
 
@@ -62,13 +66,13 @@ export default class DevicesController {
                 'devices.$.vendor':devicesData.vendor,
                 'devices.$.status':devicesData.status,
             });
-            if(gateway)  return response.status(successPostResponse.httpStatus)
-                            .json(generateResponse(successPostResponse,gateway,'Devices update successfully'));
-            else    return response.status(failedPostResponse.httpStatus)
-                            .json(generateErrorResponse(failedPostResponse,{},'Failed to update devices'));                   
+            if(gateway)  return response.status(successPutResponse.httpStatus)
+                            .json(generateResponse(successPutResponse,gateway,'Devices update successfully'));
+            else    return response.status(failedPutResponse.httpStatus)
+                            .json(generateErrorResponse(failedPutResponse,{},'Failed to update devices'));                   
         } catch(ex){ 
-            return response.status(failedPostResponse.httpStatus)
-                .json(generateErrorResponse(failedPostResponse,ex,'Failed to update devices'));
+            return response.status(failedPutResponse.httpStatus)
+                .json(generateErrorResponse(failedPutResponse,ex,'Failed to update devices'));
         }
     }
 
@@ -79,13 +83,13 @@ export default class DevicesController {
             const gatewayID = mongooseWrapper.getObjectID(request.params.gatewayID);
             const gateway = await this._gatewayService.update({_id:gatewayID},
                 { $pull: { devices: { _id: _id } } });
-            if(gateway)  return response.status(successPostResponse.httpStatus)
-                            .json(generateResponse(successPostResponse,gateway,'Gateway removed successfully'));
-            else    return response.status(failedPostResponse.httpStatus)
-                            .json(generateErrorResponse(failedPostResponse,{},'Failed to removed gateway'));                   
+            if(gateway)  return response.status(successDeleteResponse.httpStatus)
+                            .json(generateResponse(successDeleteResponse,gateway,'Gateway removed successfully'));
+            else    return response.status(failedDeleteResponse.httpStatus)
+                            .json(generateErrorResponse(failedDeleteResponse,{},'Failed to removed gateway'));                   
         } catch(ex){ 
-            return response.status(failedPostResponse.httpStatus)
-                .json(generateErrorResponse(failedPostResponse,ex,'Failed to removed gateway'));
+            return response.status(failedDeleteResponse.httpStatus)
+                .json(generateErrorResponse(failedDeleteResponse,ex,'Failed to removed gateway'));
         }
     }
 
